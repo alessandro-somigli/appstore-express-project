@@ -18,13 +18,29 @@ app.get('/', (req, res) => {
 })
 
 app.get('/games', async (req, res) => {
-    const response = await axios({
-        method: 'GET',
-        baseURL: 'http://api.steampowered.com',
-        url: '/ISteamApps/GetAppList/v0002/?format=json'
+    const auth_token = await axios({
+        method: 'POST',
+        baseURL: 'https://id.twitch.tv',
+        url: '/oauth2/token',
+        params: {
+            client_id: process.env.TWITCH_CLIENT_ID,
+            client_secret: process.env.TWITCH_CLIENT_SECRET,
+            grant_type: 'client_credentials'
+        }
+    })
+    
+    const games = await axios({
+        method: 'POST',
+        baseURL: 'https://api.igdb.com',
+        url: '/v4/games',
+        headers: {
+            'Client-ID': process.env.TWITCH_CLIENT_ID,
+            Authorization: 'Bearer ' + auth_token.data.access_token,
+            Body: 'fields *;'
+        }
     })
 
-    res.send(JSON.stringify(response.data))
+    res.send(JSON.stringify(games.data))
 })
 
 app.listen(process.env.PORT || 3000)
