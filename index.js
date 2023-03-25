@@ -37,25 +37,10 @@ app.get('/games', async (req, res) => {
             'Client-ID': process.env.TWITCH_CLIENT_ID,
             Authorization: 'Bearer ' + auth_token.data.access_token,
         },
-        data: "fields name,genres.name,cover.image_id, rating, url; where id = 1123;"
+        data: "fields name,genres.name,cover.image_id,rating,url; limit 50;"
     })
 
     res.send(JSON.stringify(games.data))
 })
 
 app.listen(process.env.PORT || 3000)
-
-
-
-/*
-app.get('/apps', (req, res) => {
-    res.send('appstore server api, check /games, /apps, /books, /movies')
-})
-
-app.get('/books', (req, res) => {
-    res.send('appstore server api, check /games, /apps, /books, /movies')
-})
-
-app.get('/movies', (req, res) => {
-    res.send('appstore server api, check /games, /apps, /books, /movies')
-})*/
