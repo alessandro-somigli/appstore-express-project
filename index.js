@@ -37,7 +37,7 @@ app.get('/games', async (req, res) => {
             'Client-ID': process.env.TWITCH_CLIENT_ID,
             Authorization: 'Bearer ' + auth_token.data.access_token,
         },
-        data: "fields name,genres.name,cover.image_id,rating,url; limit 50;"
+        data: "fields name,genres.name,cover.image_id,rating,url,artworks.url; limit 50;"
     })
 
     res.send(JSON.stringify(games.data))
