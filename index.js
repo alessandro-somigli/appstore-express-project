@@ -106,6 +106,32 @@ app.get('/games/:id', async (req, res) => {
 // /apps
 
 // /books
+app.get('/books', async (req, res) => {
+    const query = `?q=books
+    &fields=title,
+        key,
+        author_name,
+        first_publish_year,
+        number_of_pages_median,
+        ratings_average,
+        ratings_count,
+        currently_reading_count,
+        already_read_count,
+        cover_i
+    &sort=random
+    &limit=50`
+
+    const books = await axios({
+        method: 'GET',
+        baseURL: 'https://openlibrary.org',
+        url: '/search.json' + query
+    })
+
+    res.send(JSON.stringify(books.data))
+})
+
+// images:
+// https://covers.openlibrary.org/b/id/10865338-L.jpg
 
 // /movies
 app.get('/movies', async (req, res) => {
