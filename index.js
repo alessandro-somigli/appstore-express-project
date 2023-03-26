@@ -108,5 +108,26 @@ app.get('/games/:id', async (req, res) => {
 // /books
 
 // /movies
+app.get('/movies', async (req, res) => {
+    const movies = await axios({
+        method: 'GET',
+        baseURL: 'https://api.themoviedb.org',
+        url: `/3/trending/movie/day?api_key=${process.env.MOVIE_DB_API_KEY}`,
+    })
+
+    res.send(JSON.stringify(movies.data))
+})
+
+app.get('/movies/:id', async (req, res) => {
+    const game_id = req.params.id
+
+    const movie = await axios({
+        method: 'GET',
+        baseURL: 'https://api.themoviedb.org',
+        url: `/3/movie/${game_id}?api_key=${process.env.MOVIE_DB_API_KEY}`,
+    })
+
+    res.send(JSON.stringify(movie.data))
+})
 
 app.listen(process.env.PORT || 3000)
