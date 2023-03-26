@@ -75,7 +75,6 @@ app.get('/games/:id', async (req, res) => {
 
     const query = `
         fields name,
-            version_title,
             storyline,
             summary,
             genres.name,
