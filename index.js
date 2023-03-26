@@ -77,6 +77,8 @@ app.get('/games/:id', async (req, res) => {
         fields name,
             storyline,
             summary,
+            involved_companies.company.name,
+            involved_companies.company.url,
             genres.name,
             themes.name,
             cover.image_id,
