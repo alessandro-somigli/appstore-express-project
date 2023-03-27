@@ -1,5 +1,5 @@
 // imports
-import express from 'express'
+import express, { query } from 'express'
 import dotenv from 'dotenv'
 import axios from 'axios'
 
@@ -117,7 +117,8 @@ app.get('/books', async (req, res) => {
         ratings_count,
         currently_reading_count,
         already_read_count,
-        cover_i
+        cover_i,
+        edition_key
     &sort=random
     &limit=50`
 
@@ -129,6 +130,21 @@ app.get('/books', async (req, res) => {
 
     res.send(JSON.stringify(books.data))
 })
+
+app.get('/books/:id', async (req, res) => {
+    const book_id = req.params.id
+
+    const query = `?bibkeys=OLID:${book_id}&jscmd=data&format=json`
+
+    const book = await axios({
+        method: 'GET',
+        baseURL: 'https://openlibrary.org',
+        url: "/api/books/" + query
+    })
+
+    res.send(JSON.stringify(book.data))
+})
+
 
 // images:
 // https://covers.openlibrary.org/b/id/10865338-L.jpg
