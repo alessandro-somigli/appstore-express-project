@@ -107,7 +107,7 @@ app.get('/games/:id', async (req, res) => {
 
 // /books
 app.get('/books', async (req, res) => {
-    const query = `?q=books
+    const query = `?q=fantasy
     &fields=title,
         key,
         author_name,
@@ -119,7 +119,7 @@ app.get('/books', async (req, res) => {
         already_read_count,
         cover_i,
         edition_key
-    &sort=random
+    &sort=scans
     &limit=50`
 
     const books = await axios({
