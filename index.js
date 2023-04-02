@@ -106,26 +106,14 @@ app.get('/games/:id', async (req, res) => {
 // /apps
 
 // /books
+
 app.get('/books', async (req, res) => {
-    const query = `?q=fantasy
-    &fields=title,
-        key,
-        author_name,
-        first_publish_year,
-        number_of_pages_median,
-        ratings_average,
-        ratings_count,
-        currently_reading_count,
-        already_read_count,
-        cover_i,
-        edition_key
-    &sort=scans
-    &limit=50`
+    const query = `?q=book&startIndex=0&maxResults=40&printType=books&filter=full&projection=lite`
 
     const books = await axios({
         method: 'GET',
-        baseURL: 'https://openlibrary.org',
-        url: '/search.json' + query
+        baseURL: 'https://www.googleapis.com',
+        url: '/books/v1/volumes' + query
     })
 
     res.send(JSON.stringify(books.data))
@@ -134,12 +122,10 @@ app.get('/books', async (req, res) => {
 app.get('/books/:id', async (req, res) => {
     const book_id = req.params.id
 
-    const query = `?bibkeys=OLID:${book_id}&jscmd=data&format=json`
-
     const book = await axios({
         method: 'GET',
-        baseURL: 'https://openlibrary.org',
-        url: "/api/books/" + query
+        baseURL: 'https://www.googleapis.com',
+        url: "/books/v1/volumes/" + book_id
     })
 
     res.send(JSON.stringify(book.data))
