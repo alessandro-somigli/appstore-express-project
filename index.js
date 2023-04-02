@@ -108,7 +108,7 @@ app.get('/games/:id', async (req, res) => {
 // /books
 
 app.get('/books', async (req, res) => {
-    const query = `?q=fantasy+subject:fantasy&startIndex=0&maxResults=40&printType=books&filter=full`
+    const query = `?q=book+subject:fantasy&startIndex=0&maxResults=40&printType=books&filter=full`
 
     const books = await axios({
         method: 'GET',
